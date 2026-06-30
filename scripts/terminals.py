@@ -7,6 +7,8 @@ one aesthetic. Content is static, so these renderers ignore live profile data.
 """
 from __future__ import annotations
 
+import textwrap
+
 import svgkit as k
 
 COMMENT = "#9d7bd8"   # muted purple for comments / chrome
@@ -27,15 +29,56 @@ def _kv(key: str, value: str, *, pad: int = 12) -> list:
 
 
 # ── $ neofetch ────────────────────────────────────────────────────────────────
-_ARCH_LOGO = [
-    "      -`", "     .o+`", "    `ooo/", "   `+oooo:", "  `+oooooo:",
-    "  -+oooooo+:", "`/:-:++oooo+:", "`/++++/+++++++:", "`/++++++++++++++:",
-    "`/+++ooooooooooooo/`", "./ooosssso++osssssso+`", ".oossssso-````/ossssss+`",
-    "-osssssso.      :ssssssso.", ":osssssss/        osssso+++.",
-    "/ossssssss/        +ssssooo/-", "`/ossssso+/:-        -:/+osssso+-",
-    "`+sso+:-`                 `.-/+oso:", "`++:.                           `-/+/",
-    ".`                                 `/",
-]
+# Tux — the classic Linux mascot, rendered with tight line spacing (so the art
+# stays coherent) and shaded top→bottom cyan → pink → purple to sit inside the
+# vaporwave palette while reading as a soft volumetric "3D" gradient.
+_TUX_ART = r"""
+                                 .:xxxxxxxx:.
+                             .xxxxxxxxxxxxxxxx.
+                            :xxxxxxxxxxxxxxxxxxx:.
+                           .xxxxxxxxxxxxxxxxxxxxxxx:
+                          :xxxxxxxxxxxxxxxxxxxxxxxxx:
+                          xxxxxxxxxxxxxxxxxxxxxxxxxxX:
+                          xxx:::xxxxxxxx::::xxxxxxxxx:
+                         .xx:   ::xxxxx:     :xxxxxxxx
+                         :xx  x.  xxxx:  xx.  xxxxxxxx
+                         :xx xxx  xxxx: xxxx  :xxxxxxx
+                         'xx 'xx  xxxx:. xx'  xxxxxxxx
+                          xx ::::::xx:::::.   xxxxxxxx
+                          xx:::::.::::.:::::::xxxxxxxx
+                          :x'::::'::::':::::':xxxxxxxxx.
+                          :xx.::::::::::::'   xxxxxxxxxx
+                          :xx: '::::::::'     :xxxxxxxxxx.
+                         .xx     '::::'        'xxxxxxxxxx.
+                       .xxxx                     'xxxxxxxxx.
+                     .xxxx                         'xxxxxxxxx.
+                   .xxxxx:                          xxxxxxxxxx.
+                  .xxxxx:'                          xxxxxxxxxxx.
+                 .xxxxxx:::.           .       ..:::_xxxxxxxxxxx:.
+                .xxxxxxx''      ':::''            ''::xxxxxxxxxxxx.
+                xxxxxx            :                  '::xxxxxxxxxxxx
+               :xxxx:'            :                    'xxxxxxxxxxxx:
+              .xxxxx              :                     ::xxxxxxxxxxxx
+              xxxx:'                                    ::xxxxxxxxxxxx
+              xxxx               .                      ::xxxxxxxxxxxx.
+          .:xxxxxx               :                      ::xxxxxxxxxxxx::
+          xxxxxxxx               :                      ::xxxxxxxxxxxxx:
+          xxxxxxxx               :                      ::xxxxxxxxxxxxx:
+          ':xxxxxx               '                      ::xxxxxxxxxxxx:'
+            .:. xx:.                                   .:xxxxxxxxxxxxx'
+          ::::::.'xx:.            :                  .:: xxxxxxxxxxx':
+  .:::::::::::::::.'xxxx.                            ::::'xxxxxxxx':::.
+  ::::::::::::::::::.'xxxxx                          :::::.'.xx.'::::::.
+  ::::::::::::::::::::.'xxxx:.                       :::::::.'':::::::::
+  ':::::::::::::::::::::.'xx:'                     .'::::::::::::::::::::..
+    :::::::::::::::::::::.'xx                    .:: :::::::::::::::::::::::
+  .:::::::::::::::::::::::. xx               .::xxxx :::::::::::::::::::::::
+  :::::::::::::::::::::::::.'xxx..        .::xxxxxxx ::::::::::::::::::::'
+  '::::::::::::::::::::::::: xxxxxxxxxxxxxxxxxxxxxxx :::::::::::::::::'
+    '::::::::::::::::::::::: xxxxxxxxxxxxxxxxxxxxxxx :::::::::::::::'
+        ':::::::::::::::::::_xxxxxx::'''::xxxxxxxxxx '::::::::::::'
+             '':.::::::::::'                        `._'::::::''
+"""
 _NEOFETCH_INFO = [
     ("OS", "Arch Linux (btw)"), ("Kernel", "6.x.x-arch-hardened"),
     ("Shell", "zsh + tmux"), ("WM", "Hyprland"), ("Editor", "Neovim (obviously)"),
@@ -46,16 +89,52 @@ _NEOFETCH_INFO = [
 ]
 
 
-def render_neofetch() -> str:
-    """Arch ASCII logo beside the system-info column, CRT icon in the corner."""
-    width, rows = 760, len(_ARCH_LOGO) + 1
-    logo = k.mono_rows([[(ln, KEY)] for ln in _ARCH_LOGO], x=22, size=12)
-    info = k.mono_rows(
-        [[("rathosops", k.PINK2), ("@", COMMENT), ("github", KEY)],
-         [("─" * 30, COMMENT)],
-         *[_kv(key, val) for key, val in _NEOFETCH_INFO]],
-        x=250, size=12,
+def _tux_logo(x: float, y0: float, *, size: float = 11, line_h: float = 13) -> tuple[str, float, float]:
+    """Render the Tux art with tight line spacing; return (svg, pixel width).
+
+    Each line is shaded along a cyan → pink → purple ramp by its vertical
+    position so the bird reads as a soft volumetric gradient instead of flat
+    line-art, while staying within the vaporwave palette.
+    """
+    art = textwrap.dedent(_TUX_ART.strip("\n")).splitlines()
+    last = len(art) - 1
+
+    def shade(i: int) -> str:
+        t = i / last
+        return k.lerp(k.CYAN, k.PINK, t * 2) if t < 0.5 \
+            else k.lerp(k.PINK, k.PURPLE, (t - 0.5) * 2)
+
+    spans = "".join(
+        f'<text x="{x}" y="{y0 + i * line_h:.0f}" font-family="{k.MONO}" '
+        f'font-size="{size}" xml:space="preserve">'
+        f'<tspan fill="{shade(i)}" xml:space="preserve">{k.esc(ln)}</tspan></text>'
+        for i, ln in enumerate(art)
     )
+    art_w = max(len(ln) for ln in art) * size * 0.6
+    art_h = len(art) * line_h
+    return spans, art_w, art_h
+
+
+def render_neofetch() -> str:
+    """Tux ASCII mascot beside the system-info column, CRT icon in the corner.
+
+    The big Tux drives the window height; the system-info column is centred
+    vertically next to it so the layout stays balanced.
+    """
+    size, line_h = 11, 13
+    logo, art_w, art_h = _tux_logo(20, k.BODY_TOP, size=size, line_h=line_h)
+
+    info_rows = [[("rathosops", k.PINK2), ("@", COMMENT), ("github", KEY)],
+                 [("─" * 30, COMMENT)],
+                 *[_kv(key, val) for key, val in _NEOFETCH_INFO]]
+    info_x = 20 + art_w + 40
+    info_h = len(info_rows) * k.LINE_HEIGHT
+    info_y0 = k.BODY_TOP + max(0.0, (art_h - info_h) / 2)
+    info = k.mono_rows(info_rows, x=info_x, y0=info_y0, size=12)
+
+    # window height is derived from `rows`; size it to fit the (taller) Tux art.
+    rows = int(art_h / k.LINE_HEIGHT) + 2
+    width = int(info_x + 46 * 12 * 0.6 + 24)
     return k.window(width, "$ neofetch", logo + info, rows=rows,
                     decoration=k.icon_crt(width - 56, 52, 0.95))
 
@@ -214,6 +293,81 @@ def render_journalctl() -> str:
                     decoration=k.icon_gamepad(760 - 60, 52, 0.8))
 
 
+# ── $ tail -f /var/log/philosophy.log ────────────────────────────────────────
+_PHILOSOPHY = [
+    ("ops", "se você não tem runbook, você não tem operação — tem sorte."),
+    ("security", "o shift-left não é metodologia. é responsabilidade."),
+    ("infra", "imutabilidade não é opcional. é higiene básica."),
+    ("pipeline", "um deploy sem scan de imagem é um deploy de esperança."),
+    ("linux", "o terminal não é uma ferramenta. é a interface real do sistema."),
+    ("devops", "DevOps não é cargo. é cultura. quem cobra o cargo, não entendeu."),
+    ("code", "automação sem observabilidade é automação às cegas."),
+    ("career", "o engenheiro sênior não é quem sabe mais. é quem quebrou mais e documentou."),
+]
+_PHIL_COLOR = {"ops": KEY, "security": k.PINK, "infra": OK, "pipeline": k.PINK2,
+               "linux": KEY, "devops": k.PINK, "code": OK, "career": k.PINK2}
+
+
+def render_philosophy() -> str:
+    """Personal principles as a tailed log, each tag colour-coded by domain."""
+    rows = []
+    for tag, msg in _PHILOSOPHY:
+        rows.append([
+            (f"[{tag}]".ljust(12), _PHIL_COLOR[tag]),
+            (msg, VALUE),
+        ])
+    return k.window(820, "$ tail -f /var/log/philosophy.log",
+                    k.mono_rows(rows), rows=len(rows),
+                    decoration=k.icon_pizza(820 - 50, 50, 0.7))
+
+
+# ── $ sudo make deploy-career ────────────────────────────────────────────────
+_CAREER_FLAGS = [
+    ("--target", "devops-junior"), ("--focus", "devsecops"), ("--cloud", "aws"),
+    ("--mindset", "linux-first"), ("--secure", "shift-left"), ("--year", "2026"),
+]
+_CAREER_DONE = [
+    ("backend experience loaded", "6 years"),
+    ("linux mindset enabled", "Arch btw"),
+    ("pipeline security initialized", "Trivy + Gitleaks + Semgrep"),
+    ("observability stack running", "LGTM + OTel"),
+    ("cloud-native roadmap active", "AWS + K8s + Terraform"),
+]
+_CAREER_WIP = [
+    "aws hands-on", "terraform associate cert", "kubernetes production depth",
+]
+
+
+def render_connect() -> str:
+    """The career build: make invocation, progress bar and check-list output."""
+    rows: list = [[("rathosops@github", k.PINK2), (":~$ ", COMMENT),
+                   ("sudo make ", KEY), ("deploy-career", ACCENT), (" \\", VALUE)]]
+    pad = max(len(f) for f, _ in _CAREER_FLAGS)
+    for i, (flag, val) in enumerate(_CAREER_FLAGS):
+        tail = " \\" if i < len(_CAREER_FLAGS) - 1 else ""
+        rows.append([("  " + flag.ljust(pad + 2), KEY), (val, VALUE), (tail, VALUE)])
+    rows.append("")
+
+    filled = round(0.82 * 24)
+    bar = "█" * filled + "░" * (24 - filled)
+    rows.append([("[", COMMENT), (bar, OK), ("] ", COMMENT), ("82% complete", ACCENT)])
+    rows.append("")
+
+    width_dots = 38
+    for label, val in _CAREER_DONE:
+        dots = "." * max(3, width_dots - len(label))
+        rows.append([("[OK]  ", OK), (label + " ", VALUE),
+                     (dots, COMMENT), (" " + val, k.PINK2)])
+    for label in _CAREER_WIP:
+        dots = "." * max(3, width_dots - len(label))
+        rows.append([("[..]  ", k.PURPLE), (label + " ", VALUE),
+                     (dots, COMMENT), (" in progress", ACCENT)])
+    rows.append([("$ ", OK), ("_", k.PINK2)])
+
+    return k.window(820, "$ sudo make deploy-career", k.mono_rows(rows),
+                    rows=len(rows), decoration=k.icon_gamepad(820 - 60, 52, 0.8))
+
+
 #: filename -> renderer, consumed by gen_profile.
 TERMINALS = {
     "term_neofetch.svg": render_neofetch,
@@ -222,4 +376,6 @@ TERMINALS = {
     "term_htop.svg": render_htop,
     "term_tree.svg": render_tree,
     "term_journalctl.svg": render_journalctl,
+    "term_philosophy.svg": render_philosophy,
+    "term_connect.svg": render_connect,
 }

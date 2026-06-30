@@ -161,18 +161,29 @@
 
 ---
 
+## `$ render --isometric ~/.contributions`
+
+<!-- 3D isometric "city" of contributions — towers rise with daily commit volume.
+     Served live by CommitPulse (github.com/JhaSourav07/commitpulse); the neon
+     theme matches the vaporwave palette of the rest of the profile. -->
+
+<div align="center">
+
+<img width="85%" alt="contributions as a 3D isometric city" src="https://commitpulse.vercel.app/api/streak?user=rathosops&theme=neon&bg=1a0b2e&accent=ff2e97&text=00ffff" />
+
+<sub>`▸ towers rise with daily commit volume — rendered in 3D isometric projection`</sub>
+
+</div>
+
+---
+
 ## `$ tail -f /var/log/philosophy.log`
 
-```log
-[ops]       se você não tem runbook, você não tem operação — tem sorte.
-[security]  o shift-left não é metodologia. é responsabilidade.
-[infra]     imutabilidade não é opcional. é higiene básica.
-[pipeline]  um deploy sem scan de imagem é um deploy de esperança.
-[linux]     o terminal não é uma ferramenta. é a interface real do sistema.
-[devops]    DevOps não é cargo. é cultura. quem cobra o cargo, não entendeu.
-[code]      automação sem observabilidade é automação às cegas.
-[career]    o engenheiro sênior não é quem sabe mais. é quem quebrou mais e documentou.
-```
+<div align="center">
+
+<img width="85%" alt="$ tail -f /var/log/philosophy.log" src="./assets/term_philosophy.svg" />
+
+</div>
 
 ---
 
@@ -194,28 +205,7 @@
 
 <br/><br/>
 
-```bash
-rathosops@github:~$ sudo make deploy-career \
-  --target  devops-junior     \
-  --focus   devsecops         \
-  --cloud   aws               \
-  --mindset linux-first       \
-  --secure  shift-left        \
-  --year    2026
-
-[████████████████████░░░░] 82% complete
-
-[OK]  backend experience loaded ............ 6 years
-[OK]  linux mindset enabled ................ Arch btw
-[OK]  pipeline security initialized ......... Trivy + Gitleaks + Semgrep
-[OK]  observability stack running ........... LGTM + OTel
-[OK]  cloud-native roadmap active ........... AWS + K8s + Terraform
-[..] aws hands-on .......................... in progress
-[..] terraform associate cert .............. in progress
-[..] kubernetes production depth ........... in progress
-
-$ _
-```
+<img width="85%" alt="$ sudo make deploy-career" src="./assets/term_connect.svg" />
 
 </div>
 
