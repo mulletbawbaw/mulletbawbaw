@@ -1,4 +1,5 @@
-<img width="100%" alt="header" src="https://capsule-render.vercel.app/api?type=waving&color=0:1a0b2e,25:3a0ca3,55:bf00ff,80:ff2e97,100:ff6bd6&height=210&section=header&text=rathosops&fontSize=56&fontColor=ffffff&animation=twinkling&fontAlignY=36&desc=%E2%96%B8%20backend%20experience%20%E2%86%92%20secure%2C%20automated%20%26%20observable%20pipelines%20%E2%97%82&descAlignY=60&descSize=16&descColor=00ffff&stroke=ff6bd6&strokeWidth=1" />
+<!-- 3D vaporwave header — served from this repo (no rate limits / never breaks in Brave) -->
+<img width="100%" alt="rathosops — backend experience to secure, automated and observable pipelines" src="./assets/header.svg" />
 
 <table border="0">
 <tr>
@@ -45,25 +46,25 @@
 ## `$ neofetch`
 
 ```
-                   -`                    rathosops@github
-                  .o+`                   ─────────────────────────────────────
-                 `ooo/                   OS         Arch Linux (btw)
-                `+oooo:                  Kernel     6.x.x-arch-hardened
-               `+oooooo:                 Shell      zsh + tmux
-               -+oooooo+:                WM         Hyprland
-             `/:-:++oooo+:               Editor     Neovim (obviously)
-            `/++++/+++++++:              Theme      Synthwave '84
-           `/++++++++++++++:             Path       Backend ──► DevOps
-          `/+++ooooooooooooo/`           Focus      CI/CD + Security + Cloud
-         ./ooosssso++osssssso+`          Cloud      AWS
-        .oossssso-````/ossssss+`         Uptime     coding since 2019
-       -osssssso.      :ssssssso.        Packages   docker git python go terraform
-      :osssssss/        osssso+++.       Terminal   kitty / alacritty
-     /ossssssss/        +ssssooo/-       Mission    automate everything, secure it all
-   `/ossssso+/:-        -:/+osssso+-
-  `+sso+:-`                 `.-/+oso:    ████ ████ ████ ████ ████ ████ ████ ████
- `++:.                           `-/+/   ▓▓▓▓ ▓▓▓▓ ▓▓▓▓ ▓▓▓▓ ▓▓▓▓ ▓▓▓▓ ▓▓▓▓ ▓▓▓▓
- .`                                 `/
+                   -`                    ╭──────────────────────────────────────────╮
+                  .o+`                   │  rathosops@github                        │
+                 `ooo/                   ╰──────────────────────────────────────────╯
+                `+oooo:                    OS        ▸  Arch Linux (btw)
+               `+oooooo:                   Kernel    ▸  6.x.x-arch-hardened
+               -+oooooo+:                  Shell     ▸  zsh + tmux
+             `/:-:++oooo+:                 WM        ▸  Hyprland
+            `/++++/+++++++:                Editor    ▸  Neovim (obviously)
+           `/++++++++++++++:               Theme     ▸  Synthwave '84
+          `/+++ooooooooooooo/`             Path      ▸  Backend ──► DevOps
+         ./ooosssso++osssssso+`            Focus     ▸  CI/CD + Security + Cloud
+        .oossssso-````/ossssss+`           Cloud     ▸  AWS
+       -osssssso.      :ssssssso.          Uptime    ▸  coding since 2019
+      :osssssss/        osssso+++.         Packages  ▸  docker git python go terraform
+     /ossssssss/        +ssssooo/-         Terminal  ▸  kitty / alacritty
+   `/ossssso+/:-        -:/+osssso+-       Mission   ▸  automate everything, secure it all
+  `+sso+:-`                 `.-/+oso:
+ `++:.                           `-/+/     ███ ███ ███ ███ ███ ███ ███ ███
+ .`                                 `/     ▓▓▓ ▓▓▓ ▓▓▓ ▓▓▓ ▓▓▓ ▓▓▓ ▓▓▓ ▓▓▓
 ```
 
 ---
@@ -71,7 +72,9 @@
 ## `$ cat /proc/self/status`
 
 ```yaml
-# /proc/self/status — rathosops career snapshot
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║   /proc/self/status — rathosops career snapshot               ║
+# ╚═══════════════════════════════════════════════════════════════╝
 
 Name:       Athos Aurélio
 Handle:     rathosops
@@ -79,13 +82,16 @@ Role:       Senior Backend Engineer → DevOps / DevSecOps
 Location:   Brazil (São Paulo state)
 Mission:    "Transform backend experience into secure, automated and observable delivery pipelines"
 
+# ── trajectory ──────────────────────────────────────────────────
 current_role:   Senior Backend Engineer @ real production systems
 target_path:    DevOps / DevSecOps / Platform Engineering / SRE
 open_to:        [ Junior DevOps, Cloud Engineer, Automation Engineer, SRE, DevSecOps ]
 
+# ── stack ───────────────────────────────────────────────────────
 base:     [ Python, Go, FastAPI, Flask, Django, Linux, Docker, CI/CD, AWS ]
 target:   [ Kubernetes, Terraform, GitHub Actions, LGTM Stack, DevSecOps, IaC ]
 
+# ── principles ──────────────────────────────────────────────────
 philosophy:
   - "If you ran it manually, you haven't shipped it — you've gambled."
   - "Security is not a phase. It's a pipeline stage."
@@ -289,9 +295,9 @@ Dec 2026  00:00:00  [APPLY] portfolio final + devops junior applications .......
 
 <div align="center">
 
-<img height="175" alt="GitHub stats" src="https://github-readme-stats.vercel.app/api?username=rathosops&show_icons=true&hide_border=true&bg_color=1a0b2e&title_color=ff6bd6&icon_color=00ffff&text_color=e0c3fc&ring_color=ff2e97&rank_icon=percentile&include_all_commits=true&count_private=true" />
+<img height="175" alt="GitHub stats" src="https://github-readme-stats.vercel.app/api?username=rathosops&show_icons=true&hide_border=true&bg_color=1a0b2e&title_color=ff6bd6&icon_color=00ffff&text_color=e0c3fc&ring_color=ff2e97&rank_icon=percentile&include_all_commits=true&count_private=true&cache_seconds=86400" />
 &nbsp;
-<img height="175" alt="Top languages" src="https://github-readme-stats.vercel.app/api/top-langs/?username=rathosops&layout=compact&hide_border=true&bg_color=1a0b2e&title_color=ff6bd6&text_color=e0c3fc&langs_count=8&hide=html,css" />
+<img height="175" alt="Top languages" src="https://github-readme-stats.vercel.app/api/top-langs/?username=rathosops&layout=compact&hide_border=true&bg_color=1a0b2e&title_color=ff6bd6&text_color=e0c3fc&langs_count=8&hide=html,css&cache_seconds=86400" />
 
 <br/><br/>
 
@@ -299,7 +305,7 @@ Dec 2026  00:00:00  [APPLY] portfolio final + devops junior applications .......
 
 <br/><br/>
 
-<img src="https://github-profile-trophy.vercel.app/?username=rathosops&theme=algolia&no-frame=true&no-bg=true&margin-w=6&row=1&column=7" alt="trophies" />
+<img src="https://github-profile-trophy.vercel.app/?username=rathosops&theme=algolia&no-frame=true&no-bg=true&margin-w=6&row=1&column=7&cache_seconds=86400" alt="trophies" />
 
 <br/><br/>
 
